@@ -9,6 +9,7 @@ import gui.seminarios.modelos.Seminario;
 import gui.areas.modelos.Area;
 import gui.interfaces.IGestorSeminarios;
 import gui.personas.modelos.Profesor;
+import gui.seminarios.modelos.GestorSeminarios;
 import gui.seminarios.modelos.NotaAprobacion;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -244,8 +245,35 @@ public class Trabajo {
      * @param observaciones observaciones del seminario
      * @return String  - cadena con el resultado de la operación (TRABAJO_FINALIZADO | ERROR_FECHA_EXPOSICION | DUPLICADOS | ERROR | ERROR_OBSERVACIONES | EXITO)
      */
-//    public String nuevoSeminario(LocalDate fechaExposicion, NotaAprobacion notaAprobacion, String observaciones) {
-//    }
+    public String nuevoSeminario(LocalDate fechaExposicion, NotaAprobacion notaAprobacion, String observaciones) {
+        GestorSeminarios gsSeminarios= GestorSeminarios.instanciar();
+        String estado= gsSeminarios.validarSeminario(fechaExposicion, notaAprobacion, observaciones);
+        if(estado.equals(IGestorSeminarios.ERROR)){
+            return estado;
+        }
+        if(estado.equals(IGestorSeminarios.ERROR_OBSERVACIONES)){
+            return estado;
+        }
+        if(estado.equals(IGestorSeminarios.DATOS_CORRECTOS)){
+            if(fechaExposicion.isAfter(this.fechaAprobacion)){
+                Seminario unSeminario= new Seminario(fechaExposicion, notaAprobacion, observaciones);
+                if(!seminarios.contains(unSeminario)){
+                    seminarios.add(unSeminario);
+                    return IGestorSeminarios.EXITO;
+                }
+                else{
+                    return IGestorSeminarios.ERROR_FECHA_EXPOSICION;
+                }
+            }
+            
+        }
+        if(estado.equals(IGestorSeminarios.ERROR)){
+            return estado;
+        }
+//        estado.equals(IGestorSeminarios.ERROR_OBSERVACIONES)){
+            return estado;
+//        }
+    }
     
     /**
      * Modifica un seminario siempre y cuando no haya otro con la misma fecha

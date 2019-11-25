@@ -87,7 +87,18 @@ public class GestorTrabajos implements IGestorTrabajos {
      */
     @Override
     public List<Trabajo> buscarTrabajos(String titulo) {
-        return null;
+        if(titulo!=null){
+            List<Trabajo> trabajos = new ArrayList<>();
+
+             for (Trabajo t : trabajos) {
+                 if (t.verTitulo().toLowerCase().contains(titulo.toLowerCase())) {
+                     trabajos.add(t);
+                 }
+             }
+
+             return trabajos;
+        }
+        return this.trabajos;
     }   
     
     /**
@@ -98,8 +109,14 @@ public class GestorTrabajos implements IGestorTrabajos {
      */
     @Override
     public Trabajo dameTrabajo(String titulo) {
+        for (Trabajo t : trabajos) {
+            if (t.verTitulo().equalsIgnoreCase(titulo)) {
+                return t;
+            }
+        }
         return null;
-    }    
+
+    }  
     
     /**
      * Busca si hay al menos un trabajo con el profesor especificado
