@@ -123,42 +123,69 @@ public class GestorSeminarios implements IGestorSeminarios{
             }
 
         }
-    
-//       public String leerSeminarios(){
-//           BufferedReader br =null;
-//           File f= new File(TEXTO_SEMINARIOS);//busca el archivo
-//           
-//           if(f.exists()){
-//               try{
-//                   br= new BufferedReader(new FileReader(f));
-//                   String cadena;
-//                   while((cadena= br.readLine())!= null){
-//                       String vector[]= cadena.split(";");
-//                       DateTimeFormatter format= DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//                       LocalDate fechaExposicion= LocalDate.parse(vector[0], format);
-//                       if(vector[1].equals(NotaAprobacion.APROBADO_CO.name())){
-//                           NotaAprobacion nota= NotaAprobacion.APROBADO_CO;
-//                           Seminario unSeminario= new Seminario(fechaExposicion, nota, vector[2]);
-//                           
-//                       }
-//                       if(vector[1].equals(NotaAprobacion.APROBADO_SO.name())){
-//                           NotaAprobacion nota= NotaAprobacion.APROBADO_SO;
-//                       }
-//                      
-//                       if(vector[1].equals(NotaAprobacion.DESAPROBADO.name())){
-//                           NotaAprobacion nota= NotaAprobacion.DESAPROBADO;
-//                           Seminario unSeminario= new Seminario(fechaExposicion, nota,vector[2]);
-//                       }
-//                   }
-//                   
-//               }catch(IOException ioe){
-//                   return LECTURA_ERROR;
-//               }
-//           }
-//           
-//           
-//       }
 
+    public String leerSeminarios() {
+        BufferedReader br = null;
+        File f = new File(TEXTO_SEMINARIOS);//busca el archivo
+
+        if (f.exists()) {
+
+            try {
+                GestorTrabajos gsTrabajos = GestorTrabajos.instanciar();
+                for (Trabajo t : gsTrabajos.buscarTrabajos("")) {
+                    List<Seminario> seminarios = t.verSeminarios();
+                    br = new BufferedReader(new FileReader(f));
+                    String cadena;
+                    while ((cadena = br.readLine()) != null) {
+                        String vector[] = cadena.split(";");
+                        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        LocalDate fechaExposicion = LocalDate.parse(vector[0], format);
+                        if (vector[1].equals(NotaAprobacion.APROBADO_CO.name())) {
+                            NotaAprobacion nota = NotaAprobacion.APROBADO_CO;
+                            String observaciones = vector[2];
+                            Seminario unSeminario = new Seminario(fechaExposicion, nota, observaciones);
+                            seminarios.add(unSeminario);
+                        }
+                        if (vector[1].equals(NotaAprobacion.APROBADO_SO.name())) {
+                            NotaAprobacion nota = NotaAprobacion.APROBADO_SO;
+                            String observaciones = vector[2];
+                            Seminario unSeminario = new Seminario(fechaExposicion, nota, observaciones);
+                            seminarios.add(unSeminario);
+                        }
+
+                        if (vector[1].equals(NotaAprobacion.DESAPROBADO.name())) {
+                            NotaAprobacion nota = NotaAprobacion.DESAPROBADO;
+                            String observaciones = vector[2];
+                            Seminario unSeminario = new Seminario(fechaExposicion, nota, observaciones);
+                            seminarios.add(unSeminario);
+                        }
+                    }
+
+                }
+                return LECTURA_OK;
+            } catch (IOException ioe) {
+                return LECTURA_ERROR;
+            } finally {
+                if (br != null) {
+                    try {
+                        br.close();
+                    } catch (IOException ioe) {
+                        ioe.printStackTrace();
+                    }
+                }
+            }
+        }
+        return IGestorSeminarios.ARCHIVO_INEXISTENTE;
     }
+}
+       
+               
+           
+           
+           
+       
+
+    
+
 
 
