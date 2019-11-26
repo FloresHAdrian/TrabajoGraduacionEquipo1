@@ -8,6 +8,7 @@ package gui.trabajos.modelos;
 import gui.seminarios.modelos.Seminario;
 import gui.areas.modelos.Area;
 import gui.interfaces.IGestorSeminarios;
+import gui.interfaces.IGestorTrabajos;
 import gui.personas.modelos.Profesor;
 import gui.seminarios.modelos.GestorSeminarios;
 import gui.seminarios.modelos.NotaAprobacion;
@@ -233,8 +234,9 @@ public class Trabajo {
      * @param seminario seminario a buscar
      * @return boolean  - true si el trabajo tiene el seminario especificado, false en caso contrario
      */
-//    public boolean tieneEsteSeminario(Seminario seminario) {
-//    }
+    public boolean tieneEsteSeminario(Seminario seminario) {
+        return seminarios.contains(seminario);
+    }
     
     /**
      * Crea un seminario siempre y cuando no haya otro con la misma fecha
@@ -283,8 +285,25 @@ public class Trabajo {
      * @param observaciones observaciones del seminario
      * @return String  - cadena con el resultado de la operación (ERROR | ERROR_OBSERVACIONES | EXITO)
      */    
-//    public String modificarSeminario(Seminario seminario, NotaAprobacion notaAprobacion, String observaciones) {
-//    }
+    public String modificarSeminario(Seminario seminario, NotaAprobacion notaAprobacion, String observaciones) {
+
+        if (tieneEsteSeminario(seminario)) {
+            GestorSeminarios gsSeminarios = GestorSeminarios.instanciar();
+            String estado = gsSeminarios.validarSeminario(notaAprobacion, observaciones);
+            if (estado.equals(IGestorSeminarios.DATOS_CORRECTOS)) {
+                for (Seminario s : this.seminarios) {
+                    if (s.equals(seminario)) {
+                        s.asignarNotaAprobacion(notaAprobacion);
+                        s.asignarObservaciones(observaciones);
+                    }
+                }
+                return IGestorTrabajos.SEMINARIO_EXITO;
+            }
+            return estado;
+
+        }
+        return IGestorTrabajos.SEMINARIO_INEXISTENTE;
+    }
 
     
     /**
