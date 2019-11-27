@@ -37,4 +37,10 @@ public class Alumno extends Persona {
     public void asignarCX(String cx) {
         this.cx = cx;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Alumno{" + "cx=" + cx + '}';
+    }
+    
 }

@@ -35,4 +35,11 @@ public class Profesor extends Persona {
     public void asignarCargo(Cargo cargo) {
         this.cargo = cargo;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Profesor{" + "cargo=" + cargo + '}';
+    }
+    
+    
 }

@@ -9,14 +9,12 @@ import gui.seminarios.modelos.Seminario;
 import gui.areas.modelos.Area;
 import gui.interfaces.IGestorSeminarios;
 import gui.interfaces.IGestorTrabajos;
-import gui.personas.modelos.Profesor;
 import gui.seminarios.modelos.GestorSeminarios;
 import gui.seminarios.modelos.NotaAprobacion;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class Trabajo {                 
     private String titulo;
@@ -170,8 +168,14 @@ public class Trabajo {
      * 1. Los alumnos se ordenan por la fecha en que comenzaron en el trabajo, y luego por apellido y nombre
      * @return List<AlumnoEnTrabajo>  - lista de los alumnos que actualmente participan del trabajo
      */
-//    public List<AlumnoEnTrabajo> verAlumnosActuales() {
-//    }        
+    public List<AlumnoEnTrabajo> verAlumnosActuales() {
+        List<AlumnoEnTrabajo> alumnosActuales =  new ArrayList<>();
+        for(AlumnoEnTrabajo a: aet){
+            if(a.verFechaHasta()!=null)
+                alumnosActuales.add(a);
+        }
+        return alumnosActuales;
+    }        
     
     /**
      * Devuelve la cantidad de profesores con el rol especificado en el trabajo
@@ -273,7 +277,7 @@ public class Trabajo {
             return estado;
         }
 //        estado.equals(IGestorSeminarios.ERROR_OBSERVACIONES)){
-            return estado;
+        return estado;
 //        }
     }
     
@@ -336,5 +340,87 @@ public class Trabajo {
      * Sirve para manejar la tabla de seminarios
      */
     public void cancelar() {
-    }        
+    }
+    
+    
+    //<editor-fold defaultstate="collapsed" desc="Metodo Mostrar">
+    /**
+     * Metodo para mostrar la informacion de un Trabajo
+     */
+    public void mostrar(){
+        int bandera1=1;         //
+        int bandera2=1;         //Banderas que utilizo para mostrar un mensaje una sola vez
+        int bandera3=1;         //
+        
+        //Formateo la fecha para mostrarla en la fomra dd/mm/aaaa
+        DateTimeFormatter patron=DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String fechaPreFormateada= this.fechaPresentacion.format(patron);
+        String fechaAprobFormateada=this.fechaAprobacion!=null ? this.fechaAprobacion.format(patron):"";
+        
+        System.out.println("\n\n");
+        System.out.println("Titulo: "+titulo.toUpperCase());
+        System.out.println("Duracion: "+duracion+" meses");
+        System.out.println("Fecha Presentacion: "+fechaPreFormateada);
+        
+        if(fechaAprobacion!=null)//Cuando se crea un trabajo la fechaAprobacion puede ser nula
+            System.out.println("Fecha Aprobacion: "+fechaAprobFormateada);
+        else
+            System.out.println("Fecha Aprobacion: -");
+        
+        System.out.println("\nAreas");
+        System.out.println("-------------------------------");
+        for(Area a: areas)
+            System.out.println(a);
+        
+        if(seminarios!=null && !seminarios.isEmpty()){//Si la lista de seminarios esta vacia no la muestro
+            System.out.println("-------------------------------");
+//            Comparator<Seminario> compSeminario = (s1 ,s2) -> s2.getFechaExposicion().compareTo(s1.getFechaExposicion());
+//            Collections.sort(listSeminario, compSeminario);
+            
+            for(Seminario s:seminarios){
+                s.mostrar();
+            }
+        
+        }
+   
+        System.out.println("\nAlumnos");
+        System.out.println("-------------------------------");
+        for(AlumnoEnTrabajo a: aet){
+            System.out.println(a.verAlumno());
+        }
+        System.out.println("");
+        
+        for(RolEnTrabajo p:ret){ //Uso 3 "for" diferentes para mostrar los elementos correspondientes en la lista
+            if(p.verRol().equals(Rol.TUTOR)){
+                if(bandera1==1){
+                    System.out.println("Tutor");
+                    System.out.println("-------------------------------");
+                    bandera1=0;
+                }
+                System.out.println(p.verProfesor());
+            }
+        }
+        for(RolEnTrabajo p:ret){
+            if(p.verRol().equals(Rol.COTUTOR)){
+                if(bandera2==1){
+                    System.out.println("\nCotutor");
+                    System.out.println("-------------------------------");
+                    bandera2=0;
+                }
+                System.out.println(p.verProfesor());
+            }
+        }
+        for(RolEnTrabajo p:ret){
+            if(p.verRol().equals(Rol.JURADO)){
+                if(bandera3==1){
+                    System.out.println("\nJurado");
+                    System.out.println("-------------------------------");
+                    bandera3=0;
+                }
+                System.out.println(p.verProfesor());
+            }
+        }
+//        System.out.println("");
+    }
+//</editor-fold>
 }
