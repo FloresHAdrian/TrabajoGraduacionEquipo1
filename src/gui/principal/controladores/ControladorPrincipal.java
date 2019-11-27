@@ -14,9 +14,11 @@ import gui.personas.modelos.Cargo;
 import gui.personas.modelos.Profesor;
 import gui.principal.vistas.VentanaPrincipal;
 import gui.trabajos.modelos.AlumnoEnTrabajo;
+import gui.trabajos.modelos.GestorTrabajos;
 import gui.trabajos.modelos.Rol;
 import gui.trabajos.modelos.RolEnTrabajo;
 import gui.trabajos.modelos.Trabajo;
+import gui.trabajos.vistas.VentanaTrabajos;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -59,6 +61,7 @@ public class ControladorPrincipal implements IControladorPrincipal {
      */                            
     @Override
     public void btnTrabajosClic(ActionEvent evt) {
+        VentanaTrabajos ventana= new VentanaTrabajos(this.ventana, true);
     }
     
     /**
@@ -112,8 +115,12 @@ public class ControladorPrincipal implements IControladorPrincipal {
         aet.add(unAlumnoEnTrabajo1);aet.add(unAlumnoEnTrabajo2);
         
         //Todo esta hecho conla suposicion de q los datos estan correctos
-        Trabajo unTrabajo = new Trabajo("Titulo", 4, areas, fecha2, fecha3, ret, aet);
-        unTrabajo.mostrar();
+//        Trabajo unTrabajo = new Trabajo("Titulo", 4, areas, fecha2, fecha3, ret, aet);
+//        unTrabajo.mostrar();
+        GestorTrabajos gsTrabajos= GestorTrabajos.instanciar();
+        gsTrabajos.nuevoTrabajo("Titulos", 4, fecha2, fecha3, areas, ret, aet);
+        Trabajo unTrabajo2= gsTrabajos.dameTrabajo("Titulos");
+//        unTrabajo2.mostrar();
         
         
         

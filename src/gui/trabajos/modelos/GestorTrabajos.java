@@ -74,7 +74,12 @@ public class GestorTrabajos implements IGestorTrabajos {
     */                                                                    
     @Override
     public String nuevoTrabajo(String titulo, int duracion, LocalDate fechaPresentacion, LocalDate fechaAprobacion, List<Area> areas, List<RolEnTrabajo> profesores, List<AlumnoEnTrabajo> aet) {
-        return null;
+        //CREO UN TRABAJO CON LOS DATOS CORRECTOS PARA PODER TRABAJAR VENTANA SEMINARIOS
+        //CORREGIR EL CODIGO DESPUES
+        Trabajo unTrabajo= new Trabajo(titulo, duracion, areas, fechaPresentacion, fechaAprobacion, profesores, aet);
+        trabajos.add(unTrabajo);
+        
+        return EXITO;
     }   
        
     /**
