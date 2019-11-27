@@ -14,6 +14,8 @@ import gui.seminarios.modelos.NotaAprobacion;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Trabajo {                 
@@ -64,6 +66,8 @@ public class Trabajo {
         this.fechaFinalizacion = fechaFinalizacion;
         this.ret = ret;
         this.aet = aet;
+        
+        System.out.println("ESTOY EN EL CONSTRUCTOR");
     }
         
     /**
@@ -265,6 +269,7 @@ public class Trabajo {
                 Seminario unSeminario= new Seminario(fechaExposicion, notaAprobacion, observaciones);
                 if(!seminarios.contains(unSeminario)){
                     seminarios.add(unSeminario);
+                    Collections.sort(seminarios);
                     return IGestorSeminarios.EXITO;
                 }
                 else{

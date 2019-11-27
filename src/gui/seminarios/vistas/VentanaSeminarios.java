@@ -6,6 +6,7 @@
 package gui.seminarios.vistas;
 
 import gui.interfaces.IControladorSeminarios;
+import javax.swing.JTable;
 
 /**
  *
@@ -17,11 +18,16 @@ public class VentanaSeminarios extends javax.swing.JDialog {
      * Creates new form VentanaSeminarios
      * @param parent
      * @param controlador
+     * @param titulo
      */
-    public VentanaSeminarios(java.awt.Frame parent, IControladorSeminarios controlador) {
+    public VentanaSeminarios(javax.swing.JDialog parent, IControladorSeminarios controlador) {
         super(parent, true);
         initComponents();
         this.controlador = controlador;
+    }
+    
+    public JTable verTablaSeminarios(){
+        return this.tablaSeminarios;
     }
 
     /**
@@ -34,12 +40,14 @@ public class VentanaSeminarios extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaSeminarios = new javax.swing.JTable();
         btnNuevArea = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Seminarios");
+        setResizable(false);
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {
                 formWindowGainedFocus(evt);
@@ -48,7 +56,7 @@ public class VentanaSeminarios extends javax.swing.JDialog {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaSeminarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -59,7 +67,7 @@ public class VentanaSeminarios extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaSeminarios);
 
         btnNuevArea.setText("Nueva");
         btnNuevArea.addActionListener(new java.awt.event.ActionListener() {
@@ -116,6 +124,7 @@ public class VentanaSeminarios extends javax.swing.JDialog {
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
         // TODO add your handling code here:
+        controlador.ventanaGanaFoco(evt);
     }//GEN-LAST:event_formWindowGainedFocus
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -180,6 +189,6 @@ public class VentanaSeminarios extends javax.swing.JDialog {
     private javax.swing.JButton btnNuevArea;
     private javax.swing.JButton btnVolver;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaSeminarios;
     // End of variables declaration//GEN-END:variables
 }
