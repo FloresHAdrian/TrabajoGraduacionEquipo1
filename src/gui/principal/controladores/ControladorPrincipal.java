@@ -13,6 +13,7 @@ import gui.personas.modelos.Alumno;
 import gui.personas.modelos.Cargo;
 import gui.personas.modelos.Profesor;
 import gui.principal.vistas.VentanaPrincipal;
+import gui.seminarios.modelos.NotaAprobacion;
 import gui.trabajos.modelos.AlumnoEnTrabajo;
 import gui.trabajos.modelos.GestorTrabajos;
 import gui.trabajos.modelos.Rol;
@@ -118,10 +119,10 @@ public class ControladorPrincipal implements IControladorPrincipal {
 //        Trabajo unTrabajo = new Trabajo("Titulo", 4, areas, fecha2, fecha3, ret, aet);
 //        unTrabajo.mostrar();
         GestorTrabajos gsTrabajos= GestorTrabajos.instanciar();
-        gsTrabajos.nuevoTrabajo("Titulos", 4, fecha2, fecha3, areas, ret, aet);
-        Trabajo unTrabajo2= gsTrabajos.dameTrabajo("Titulos");
+        gsTrabajos.nuevoTrabajo("Titulo de Prueba", 4, fecha2, fecha3, areas, ret, aet);
+        Trabajo unTrabajo2= gsTrabajos.dameTrabajo("Titulo de Prueba");
 //        unTrabajo2.mostrar();
-        
+        unTrabajo2.nuevoSeminario(fecha4, NotaAprobacion.DESAPROBADO, "No llega a lo minimo requerido");
         
         
         IControladorPrincipal controladorPrincipal = new ControladorPrincipal();

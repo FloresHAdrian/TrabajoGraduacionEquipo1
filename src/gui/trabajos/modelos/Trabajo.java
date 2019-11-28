@@ -67,7 +67,7 @@ public class Trabajo {
         this.ret = ret;
         this.aet = aet;
         
-        System.out.println("ESTOY EN EL CONSTRUCTOR");
+//        System.out.println("ESTOY EN EL CONSTRUCTOR");
     }
         
     /**
@@ -270,6 +270,8 @@ public class Trabajo {
                 if(!seminarios.contains(unSeminario)){
                     seminarios.add(unSeminario);
                     Collections.sort(seminarios);
+//                    String resultadao = 
+                    this.ultimoSeminario=this.seminarios.indexOf(unSeminario);
                     return IGestorSeminarios.EXITO;
                 }
                 else{
@@ -306,6 +308,7 @@ public class Trabajo {
                         s.asignarObservaciones(observaciones);
                     }
                 }
+                this.ultimoSeminario=this.seminarios.indexOf(seminario);
                 return IGestorTrabajos.SEMINARIO_EXITO;
             }
             return estado;
@@ -345,6 +348,7 @@ public class Trabajo {
      * Sirve para manejar la tabla de seminarios
      */
     public void cancelar() {
+        this.ultimoSeminario = -1;
     }
     
     
