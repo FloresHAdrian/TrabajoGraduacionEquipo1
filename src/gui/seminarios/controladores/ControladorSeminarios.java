@@ -44,20 +44,24 @@ public class ControladorSeminarios implements IControladorSeminarios{
     public void btnNuevoSeminarioClic(ActionEvent evt) {
 //        JTable tablaSeminarios
         this.operacion=OPERACION_ALTA;
-        IControladorAMSeminario controlador= new ControladorAMSeminario(this.ventana,null,null);
+//         Seminario unSeminario= this.obtenerSeminarioSeleccionadao();
+        IControladorAMSeminario controlador= new ControladorAMSeminario(this.ventana,null,titulo);
 
 
     }
 
     @Override
     public void btnModificarSeminarioClic(ActionEvent evt) {
+        Seminario unSeminario= this.obtenerSeminarioSeleccionadao();
         GestorTrabajos gsT= GestorTrabajos.instanciar();
         JButton btnModificar= this.ventana.verBtnModificar();
-        if(!gsT.dameTrabajo("Titulo de Prueba").tieneSeminarios()){
+        if(!gsT.dameTrabajo(titulo).tieneSeminarios()){
             btnModificar.setEnabled(false);
         }
         else{
             btnModificar.setEnabled(true);
+            this.operacion=OPERACION_MODIFICACION;
+            IControladorAMSeminario controlador= new ControladorAMSeminario(this.ventana, unSeminario, titulo);
         }
     }
 

@@ -16,6 +16,7 @@ import gui.seminarios.modelos.Seminario;
 import gui.seminarios.vistas.VentanaAMSeminario;
 
 import gui.trabajos.modelos.GestorTrabajos;
+import gui.trabajos.modelos.Trabajo;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -36,15 +37,27 @@ public class ControladorAMSeminario implements IControladorAMSeminario{
    
 
     public ControladorAMSeminario(Dialog VentanaPadre, Seminario seminario, String titulo) {
+        this.titulo= titulo;
         this.ventana = new VentanaAMSeminario(this, VentanaPadre);
         this.seminario = seminario;
-        this.titulo= titulo;
+        
+        if(seminario != null){
+            ventana.setTitle(IControladorSeminarios.MODIFICAR);
+         Date date = Date.from(seminario.verFechaExposicion().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+
+           ventana.verFechaExposicion().setDate(date);
+           ventana.verFechaExposicion().setEnabled(false);
+            ventana.verTxtObservaciones().setText(seminario.verObservaciones());
+            
+        }
+        this.inicializarComboNota(this.ventana.verComboNota());
         ventana.setTitle(IControladorSeminarios.NUEVO);
         
         ventana.setLocationRelativeTo(null);
         ventana.setVisible(true);
         
-        this.inicializarComboNota(this.ventana.verComboNota());
+        
+//        this.inicializarComboNota(this.ventana.verComboNota());
       
     }
     
@@ -57,29 +70,59 @@ public class ControladorAMSeminario implements IControladorAMSeminario{
     }
     
     public void guardar() {
+      
+        LocalDate fecha=null;
         String observaciones = this.ventana.verTxtObservaciones().getText().trim();
         NotaAprobacion nota = (NotaAprobacion) this.ventana.verComboNota().getSelectedItem();
-        Date date = this.ventana.verFechaExposicion().getCalendar().getTime();
-        LocalDate fecha = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//        LocalDate fecha= (LocalDate)this.ventana.verFecha()
+        
+ 
+        
+        if (this.ventana.verFechaExposicion().getCalendar() != null) {
+            Date date = this.ventana.verFechaExposicion().getCalendar().getTime();
+        
+            fecha = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            System.out.println("Convierte el date a localdate");
+        }
+        
+//        LocalDate fecha= (LocalDate)this.ventana.verFecha();
         IGestorTrabajos gestorT = GestorTrabajos.instanciar();
-
+        Trabajo unTrabajo= gestorT.dameTrabajo(titulo);
         IGestorSeminarios gestor = GestorSeminarios.instanciar();
         String resultado;
 
-        if (seminario.verObservaciones() == null || seminario.verFechaExposicion() == null || seminario.verNotaAprobacion() == null) {
-            resultado = gestor.validarSeminario(fecha, nota, observaciones);
+        if (seminario==null) {
+     
+            try{
+ 
+                System.out.println(observaciones);
+                System.out.println(nota);
+                System.out.println(fecha);
+                System.out.println(unTrabajo.nuevoSeminario(fecha, nota, observaciones));
+                resultado = unTrabajo.nuevoSeminario(fecha, nota, observaciones);
+             
+            }catch(NullPointerException n){
+//                ban=1;
+              resultado = IGestorTrabajos.SEMINARIO_ERROR;
+//              JOptionPane.showMessageDialog(null, "La Fecha no es Correcta");
+                
+            }
+            
         } else {
             resultado = gestorT.dameTrabajo(titulo).modificarSeminario(seminario, nota, observaciones);
         }
-
-        if (resultado.equals(IGestorTrabajos.SEMINARIO_EXITO)) {
-            this.ventana.dispose();
-        } else {
-            gestorT.cancelar();
-            JOptionPane.showMessageDialog(null, resultado, IControladorSeminarios.TITULO, JOptionPane.ERROR_MESSAGE);
+        try{
+            if (resultado.equals(IGestorTrabajos.SEMINARIO_EXITO)) {
+                this.ventana.dispose();
+            } else {
+                gestorT.cancelar();
+                JOptionPane.showMessageDialog(null, resultado, IControladorSeminarios.TITULO, JOptionPane.ERROR_MESSAGE);
+            }
+        }catch(Exception e){
+            
+                    e.printStackTrace();
+                    }
         }
-    }
+    
 
     @Override
     public void btnCancelarClic(ActionEvent evt) {
