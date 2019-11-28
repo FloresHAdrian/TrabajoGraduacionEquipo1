@@ -9,7 +9,6 @@ import gui.interfaces.IControladorAMSeminario;
 import gui.interfaces.IControladorSeminarios;
 import gui.interfaces.IGestorSeminarios;
 import gui.interfaces.IGestorTrabajos;
-import gui.seminarios.modelos.GestorSeminarios;
 import gui.seminarios.modelos.ModeloComboNota;
 import gui.seminarios.modelos.NotaAprobacion;
 import gui.seminarios.modelos.Seminario;
@@ -87,41 +86,24 @@ public class ControladorAMSeminario implements IControladorAMSeminario{
 //        LocalDate fecha= (LocalDate)this.ventana.verFecha();
         IGestorTrabajos gestorT = GestorTrabajos.instanciar();
         Trabajo unTrabajo= gestorT.dameTrabajo(titulo);
-        IGestorSeminarios gestor = GestorSeminarios.instanciar();
+//        IGestorSeminarios gestor = GestorSeminarios.instanciar();
         String resultado;
 
         if (seminario==null) {
-     
-            try{
- 
-                System.out.println(observaciones);
-                System.out.println(nota);
-                System.out.println(fecha);
-                System.out.println(unTrabajo.nuevoSeminario(fecha, nota, observaciones));
                 resultado = unTrabajo.nuevoSeminario(fecha, nota, observaciones);
-             
-            }catch(NullPointerException n){
-//                ban=1;
-              resultado = IGestorTrabajos.SEMINARIO_ERROR;
-//              JOptionPane.showMessageDialog(null, "La Fecha no es Correcta");
-                
-            }
+                System.out.println(resultado);
             
-        } else {
+        } 
+        else {
             resultado = gestorT.dameTrabajo(titulo).modificarSeminario(seminario, nota, observaciones);
         }
-        try{
-            if (resultado.equals(IGestorTrabajos.SEMINARIO_EXITO)) {
+            if (resultado.equals(IGestorSeminarios.EXITO)) {
                 this.ventana.dispose();
             } else {
                 gestorT.cancelar();
                 JOptionPane.showMessageDialog(null, resultado, IControladorSeminarios.TITULO, JOptionPane.ERROR_MESSAGE);
             }
-        }catch(Exception e){
-            
-                    e.printStackTrace();
-                    }
-        }
+    }
     
 
     @Override

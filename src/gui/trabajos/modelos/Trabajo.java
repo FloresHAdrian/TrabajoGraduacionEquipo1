@@ -273,7 +273,6 @@ public class Trabajo {
                 if(!seminarios.contains(unSeminario)){
                     seminarios.add(unSeminario);
                     Collections.sort(seminarios);
-//                    String resultadao = 
                     this.ultimoSeminario=this.seminarios.indexOf(unSeminario);
                     return IGestorSeminarios.EXITO;
                 }
