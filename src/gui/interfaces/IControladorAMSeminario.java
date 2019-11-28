@@ -6,6 +6,7 @@
 package gui.interfaces;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 public interface IControladorAMSeminario {
     /**
@@ -25,4 +26,10 @@ public interface IControladorAMSeminario {
      * @param evt evento
      */
     public void comboNotaCambiarSeleccion(ActionEvent evt);
+    
+    
+    public void txtObservacionesPresionarTecla(KeyEvent evt);
+    
+    
+    
 }

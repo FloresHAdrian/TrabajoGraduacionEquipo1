@@ -5,6 +5,7 @@
  */
 package gui.seminarios.controladores;
 
+import gui.interfaces.IControladorAMSeminario;
 import gui.interfaces.IControladorSeminarios;
 import gui.interfaces.IGestorTrabajos;
 import gui.seminarios.modelos.ModeloTablaSeminarios;
@@ -43,7 +44,7 @@ public class ControladorSeminarios implements IControladorSeminarios{
     public void btnNuevoSeminarioClic(ActionEvent evt) {
 //        JTable tablaSeminarios
         this.operacion=OPERACION_ALTA;
-        VentanaAMSeminario ventanaAMSeminario= new VentanaAMSeminario(this.ventana, true);
+        IControladorAMSeminario controlador= new ControladorAMSeminario(this.ventana,null,null);
 
 
     }
