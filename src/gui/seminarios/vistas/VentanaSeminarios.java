@@ -6,6 +6,7 @@
 package gui.seminarios.vistas;
 
 import gui.interfaces.IControladorSeminarios;
+import javax.swing.JButton;
 import javax.swing.JTable;
 
 /**
@@ -18,7 +19,6 @@ public class VentanaSeminarios extends javax.swing.JDialog {
      * Creates new form VentanaSeminarios
      * @param parent
      * @param controlador
-     * @param titulo
      */
     public VentanaSeminarios(javax.swing.JDialog parent, IControladorSeminarios controlador) {
         super(parent, true);
@@ -28,6 +28,10 @@ public class VentanaSeminarios extends javax.swing.JDialog {
     
     public JTable verTablaSeminarios(){
         return this.tablaSeminarios;
+    }
+    
+    public JButton verBtnModificar(){
+        return this.btnModificar;
     }
 
     /**
@@ -46,7 +50,6 @@ public class VentanaSeminarios extends javax.swing.JDialog {
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Seminarios");
         setResizable(false);
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {
@@ -95,23 +98,23 @@ public class VentanaSeminarios extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnNuevArea, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
+                        .addComponent(btnNuevArea, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(48, 48, 48)
                         .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(33, 33, 33))
+                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNuevArea)
                     .addComponent(btnModificar)
@@ -122,25 +125,21 @@ public class VentanaSeminarios extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
-        // TODO add your handling code here:
-        controlador.ventanaGanaFoco(evt);
-    }//GEN-LAST:event_formWindowGainedFocus
-
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        // TODO add your handling code here:
-        controlador.btnNuevoSeminarioClic(evt);
+        controlador.btnVolverClic(evt);
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
         controlador.btnModificarSeminarioClic(evt);
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnNuevAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevAreaActionPerformed
-        // TODO add your handling code here:
-        controlador.btnVolverClic(evt);
+        controlador.btnNuevoSeminarioClic(evt);
     }//GEN-LAST:event_btnNuevAreaActionPerformed
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        controlador.ventanaGanaFoco(evt);
+    }//GEN-LAST:event_formWindowGainedFocus
 
     /**
      * @param args the command line arguments
