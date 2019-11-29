@@ -24,6 +24,7 @@ public class Seminario implements Comparable<Seminario>{
         this.fechaExposicion = fechaExposicion;
         this.notaAprobacion = notaAprobacion;
         this.observaciones = observaciones;
+        
     }
        
     /**

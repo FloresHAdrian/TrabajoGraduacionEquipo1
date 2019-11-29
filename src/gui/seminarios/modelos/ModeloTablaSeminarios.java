@@ -6,6 +6,8 @@
 package gui.seminarios.modelos;
 
 import gui.trabajos.modelos.GestorTrabajos;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -60,11 +62,21 @@ public class ModeloTablaSeminarios extends AbstractTableModel{
     public Object getValueAt(int fila, int columna) {
         Seminario unSeminario= this.listaSeminarios.get(fila);
         switch(columna){
-            case 0: return unSeminario.verFechaExposicion();
+            case 0: return this.transformarFechaEnCadena(unSeminario.verFechaExposicion());
             case 1: return unSeminario.verNotaAprobacion();
             case 2: return unSeminario.verObservaciones();
-            default: return ";Hola profe como esta?";
+            default: return "Mensaje de error";
         }
+    }
+    
+      /**
+     * Dada una fecha, devuelve una cadena de la forma dd/mm/aaaa
+     * @param fecha fecha a transformar
+     * @return String  - cadena con la representación de la fecha
+     */
+    private String transformarFechaEnCadena(LocalDate fecha) {        
+        String patron = "dd/MM/yyyy";
+        return fecha.format(DateTimeFormatter.ofPattern(patron));
     }
     
     @Override

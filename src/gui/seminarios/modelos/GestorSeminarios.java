@@ -27,6 +27,7 @@ public class GestorSeminarios implements IGestorSeminarios{
     public static final String TEXTO_SEMINARIOS= "./seminarios.txt";
     
     private GestorSeminarios(){
+        this.leerSeminarios();
     }
     
     /**

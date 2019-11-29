@@ -45,7 +45,7 @@ public interface IGestorTrabajos {
     public static final String SEMINARIO_ERROR = "La fecha y/o nota de aprobación no pueden ser nulas";    
     public static final String SEMINARIO_DUPLICADO = "El trabajo ya tiene un seminario expuesto es esa fecha";    
     public static final String SEMINARIO_ERROR_OBSERVACIONES = "Se deben especificar las observaciones";    
-    public static final String SEMINARIO_EXITO = "Seminario creado/modificado/borrado con éxito";
+    public static final String SEMINARIO_EXITO = "Seminario creado/modificado con éxito";
 
     
     /**

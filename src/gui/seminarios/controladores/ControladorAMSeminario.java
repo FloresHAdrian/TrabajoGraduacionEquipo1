@@ -22,6 +22,7 @@ import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -34,30 +35,32 @@ public class ControladorAMSeminario implements IControladorAMSeminario{
       private Seminario seminario;
       private String titulo;
    
-
     public ControladorAMSeminario(Dialog VentanaPadre, Seminario seminario, String titulo) {
-        this.titulo= titulo;
+        this.titulo = titulo;
         this.ventana = new VentanaAMSeminario(this, VentanaPadre);
         this.seminario = seminario;
-        
-        if(seminario != null){
+
+        if (this.seminario != null) {
             ventana.setTitle(IControladorSeminarios.MODIFICAR);
             Date date = Date.from(seminario.verFechaExposicion().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 
             ventana.verFechaExposicion().setDate(date);
             ventana.verFechaExposicion().setEnabled(false);
             ventana.verTxtObservaciones().setText(seminario.verObservaciones());
-            
-        }
-        else
+
+        } else {
+            LocalDate fActual = LocalDate.now();
+            GregorianCalendar fechaActual = GregorianCalendar.from(fActual.atStartOfDay(ZoneId.systemDefault()));
+            this.ventana.verFechaExposicion().setCalendar(fechaActual);
+
             ventana.setTitle(IControladorSeminarios.NUEVO);
-        
+        }
+
         this.inicializarComboNota(this.ventana.verComboNota());
 
-        
         ventana.setLocationRelativeTo(null);
         ventana.setVisible(true);
-      
+
     }
     
     
@@ -67,37 +70,37 @@ public class ControladorAMSeminario implements IControladorAMSeminario{
         this.guardar();
         
     }
-    
+
     public void guardar() {
-      
-        LocalDate fecha=null;
+
+        LocalDate fecha = null;
         String observaciones = this.ventana.verTxtObservaciones().getText().trim();
         NotaAprobacion nota = (NotaAprobacion) this.ventana.verComboNota().getSelectedItem();
-        
+
         if (this.ventana.verFechaExposicion().getCalendar() != null) {
             Date date = this.ventana.verFechaExposicion().getCalendar().getTime();
-        
+
             fecha = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         }
-        
+
         IGestorTrabajos gestorT = GestorTrabajos.instanciar();
-        Trabajo unTrabajo= gestorT.dameTrabajo(titulo);
+        Trabajo unTrabajo = gestorT.dameTrabajo(titulo);
         String resultado;
 
-        if (seminario==null) {
-                resultado = unTrabajo.nuevoSeminario(fecha, nota, observaciones);
-                System.out.println(resultado);
-            
-        } 
-        else {
+        if (seminario == null) {
+            resultado = unTrabajo.nuevoSeminario(fecha, nota, observaciones);
+        } else {
             resultado = gestorT.dameTrabajo(titulo).modificarSeminario(seminario, nota, observaciones);
         }
-            if (resultado.equals(IGestorSeminarios.EXITO)) {
-                this.ventana.dispose();
-            } else {
-                gestorT.cancelar();
-                JOptionPane.showMessageDialog(null, resultado, IControladorSeminarios.TITULO, JOptionPane.ERROR_MESSAGE);
-            }
+        if (resultado.equals(IGestorSeminarios.EXITO)) {
+            JOptionPane.showMessageDialog(null, resultado, IControladorSeminarios.TITULO, JOptionPane.PLAIN_MESSAGE);
+            this.ventana.dispose();
+        } else {
+            gestorT.dameTrabajo(titulo).cancelar();
+          
+                JOptionPane.showMessageDialog(null, resultado, IControladorSeminarios.TITULO, JOptionPane.WARNING_MESSAGE);
+            
+        }
     }
     
 
@@ -122,6 +125,8 @@ public class ControladorAMSeminario implements IControladorAMSeminario{
                                 
                 case APROBADO_CO:
                 case DESAPROBADO:   this.ventana.verTxtObservaciones().setEnabled(true);
+                                    this.ventana.verTxtObservaciones().selectAll();
+                                    this.ventana.verTxtObservaciones().requestFocus();
                                     break;
             }
         }
@@ -139,9 +144,11 @@ public class ControladorAMSeminario implements IControladorAMSeminario{
     private void inicializarComboNota(JComboBox comboNota) {
         ModeloComboNota mcn = new ModeloComboNota();
         comboNota.setModel(mcn);
-        if(this.seminario!=null)
+        if(this.seminario!=null){
         mcn.seleccionarNotaAprobacion(seminario.verNotaAprobacion());
-
+        }else{
+            mcn.seleccionarNotaAprobacion(null);
+        }
     }
    
     

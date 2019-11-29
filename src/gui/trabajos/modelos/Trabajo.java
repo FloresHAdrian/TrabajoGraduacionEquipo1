@@ -274,6 +274,7 @@ public class Trabajo {
                     seminarios.add(unSeminario);
                     Collections.sort(seminarios);
                     this.ultimoSeminario=this.seminarios.indexOf(unSeminario);
+                    gsSeminarios.guardarSeminarios();
                     return IGestorSeminarios.EXITO;
                 }
                 else{
@@ -310,6 +311,7 @@ public class Trabajo {
                     }
                 }
                 this.ultimoSeminario=this.seminarios.indexOf(seminario);
+                gsSeminarios.guardarSeminarios();
                 return IGestorTrabajos.SEMINARIO_EXITO;
             }
             return estado;
