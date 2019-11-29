@@ -122,7 +122,7 @@ public class ControladorPrincipal implements IControladorPrincipal {
         gsTrabajos.nuevoTrabajo("Titulo de Prueba", 4, fecha2, fecha3, areas, ret, aet);
         Trabajo unTrabajo2= gsTrabajos.dameTrabajo("Titulo de Prueba");
 //        unTrabajo2.mostrar();
-        unTrabajo2.nuevoSeminario(fecha4, NotaAprobacion.DESAPROBADO, "No llega a lo minimo requerido");
+//        unTrabajo2.nuevoSeminario(fecha4, NotaAprobacion.DESAPROBADO, "No llega a lo minimo requerido");
         
         
         IControladorPrincipal controladorPrincipal = new ControladorPrincipal();

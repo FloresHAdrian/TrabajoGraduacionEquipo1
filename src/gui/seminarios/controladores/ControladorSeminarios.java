@@ -34,19 +34,19 @@ public class ControladorSeminarios implements IControladorSeminarios{
         this.titulo=titulo;
         this.ventana= new VentanaSeminarios(ventanaPadre, this);
         this.ventana.setLocationRelativeTo(null);
+        this.ventana.verTxtNombreTrabajo().setText(titulo);
+        this.ventana.verTxtNombreTrabajo().setEditable(false);
         this.ventana.setTitle(TITULO);
         this.ventana.setVisible(true);
         
-        System.out.println("TITULO EN EL CONSTRUCTOR CONTROLADOR SEMINARIOS:  "+this.titulo);
     }
 
     @Override
     public void btnNuevoSeminarioClic(ActionEvent evt) {
-//        JTable tablaSeminarios
+        JTable tablaSeminarios=this.ventana.verTablaSeminarios();
+        this.seminarioSeleccionado = tablaSeminarios.getSelectedRow();
         this.operacion=OPERACION_ALTA;
-//         Seminario unSeminario= this.obtenerSeminarioSeleccionadao();
         IControladorAMSeminario controlador= new ControladorAMSeminario(this.ventana,null,titulo);
-
 
     }
 
@@ -91,7 +91,7 @@ public class ControladorSeminarios implements IControladorSeminarios{
 
         GestorTrabajos gsT= GestorTrabajos.instanciar();
         JButton btnModificar= this.ventana.verBtnModificar();
-        if(!gsT.dameTrabajo("Titulo de Prueba").tieneSeminarios()){
+        if(!gsT.dameTrabajo(titulo).tieneSeminarios()){
             btnModificar.setEnabled(false);
         }
         else{
@@ -119,7 +119,8 @@ public class ControladorSeminarios implements IControladorSeminarios{
                 }
             }else{//Se creo un seminario: se lo selecciona
                 mts.fireTableDataChanged();//Se refresca la tabla
-                tablaSeminarios.setRowSelectionInterval(this.seminarioSeleccionado, this.seminarioSeleccionado);
+                tablaSeminarios.setRowSelectionInterval(elTrabajo.verUltimoSeminario(), elTrabajo.verUltimoSeminario());
+//                tablaSeminarios.setRowSelectionInterval(this.seminarioSeleccionado, this.seminarioSeleccionado);
             }
             
         }
@@ -145,6 +146,9 @@ public class ControladorSeminarios implements IControladorSeminarios{
         else{
             this.seminarioSeleccionado = -1;
         }
+        tablaSeminarios.getColumn(ModeloTablaSeminarios.COLUMNA_FECHA).setPreferredWidth(25);      
+        tablaSeminarios.getColumn(ModeloTablaSeminarios.COLUMNA_NOTA).setPreferredWidth(25); 
+        tablaSeminarios.getColumn(ModeloTablaSeminarios.COLUMNA_OBSERVACIONES).setPreferredWidth(195);
     }
     
     private Seminario obtenerSeminarioSeleccionadao(){

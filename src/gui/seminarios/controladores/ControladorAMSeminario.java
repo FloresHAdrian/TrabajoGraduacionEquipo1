@@ -42,21 +42,21 @@ public class ControladorAMSeminario implements IControladorAMSeminario{
         
         if(seminario != null){
             ventana.setTitle(IControladorSeminarios.MODIFICAR);
-         Date date = Date.from(seminario.verFechaExposicion().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+            Date date = Date.from(seminario.verFechaExposicion().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 
-           ventana.verFechaExposicion().setDate(date);
-           ventana.verFechaExposicion().setEnabled(false);
+            ventana.verFechaExposicion().setDate(date);
+            ventana.verFechaExposicion().setEnabled(false);
             ventana.verTxtObservaciones().setText(seminario.verObservaciones());
             
         }
+        else
+            ventana.setTitle(IControladorSeminarios.NUEVO);
+        
         this.inicializarComboNota(this.ventana.verComboNota());
-        ventana.setTitle(IControladorSeminarios.NUEVO);
+
         
         ventana.setLocationRelativeTo(null);
         ventana.setVisible(true);
-        
-        
-//        this.inicializarComboNota(this.ventana.verComboNota());
       
     }
     
@@ -74,19 +74,14 @@ public class ControladorAMSeminario implements IControladorAMSeminario{
         String observaciones = this.ventana.verTxtObservaciones().getText().trim();
         NotaAprobacion nota = (NotaAprobacion) this.ventana.verComboNota().getSelectedItem();
         
- 
-        
         if (this.ventana.verFechaExposicion().getCalendar() != null) {
             Date date = this.ventana.verFechaExposicion().getCalendar().getTime();
         
             fecha = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            System.out.println("Convierte el date a localdate");
         }
         
-//        LocalDate fecha= (LocalDate)this.ventana.verFecha();
         IGestorTrabajos gestorT = GestorTrabajos.instanciar();
         Trabajo unTrabajo= gestorT.dameTrabajo(titulo);
-//        IGestorSeminarios gestor = GestorSeminarios.instanciar();
         String resultado;
 
         if (seminario==null) {
@@ -109,49 +104,36 @@ public class ControladorAMSeminario implements IControladorAMSeminario{
     @Override
     public void btnCancelarClic(ActionEvent evt) {
         IGestorTrabajos gestorT= GestorTrabajos.instanciar();
-        gestorT.cancelar();
+        gestorT.dameTrabajo(titulo).cancelar();
         this.ventana.dispose();
     }
 
-//    @Override
-//    public void comboNotaCambiarSeleccion(ActionEvent evt) {
-//                        int index = combo.getSelectedIndex();
-//                if(ultimoIndiceSeleccionado != 0 && index == 0){
-//                        int opc = JOptionPane.showConfirmDialog(this, "¿Realmente desea cambiar de marca?",
-//                                "Cambio de marca", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE );
-//                       
-//                        if(opc == JOptionPane.NO_OPTION){
-//                                combo.setSelectedIndex(ultimoIndiceSeleccionado);
-//                        } else{
-//                                ultimoIndiceSeleccionado = index;
-//                        }
-//                } else{
-//                        ultimoIndiceSeleccionado = index;
-//                }
-//        }
-
     @Override
     public void comboNotaCambiarSeleccion(ActionEvent evt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void txtObservacionesPresionarTecla(KeyEvent evt) {
-        char c = evt.getKeyChar();
-        if (!Character.isLetter(c)) { //sólo se aceptan letras, Enter, Del, Backspace y espacio
-            switch (c) {
-                case KeyEvent.VK_ENTER:  //cuando se pulse Enter
-                    this.guardar();
-                    break;
-                case KeyEvent.VK_BACK_SPACE:
-                case KeyEvent.VK_DELETE:
-                case KeyEvent.VK_SPACE:
-                    break;
-                default:
-                    evt.consume(); //consume el evento para que no sea procesado por la fuente
+        JComboBox comboNota = this.ventana.verComboNota();
+        ModeloComboNota mcn = (ModeloComboNota)this.ventana.verComboNota().getModel();
+        NotaAprobacion nota = mcn.obtenerNotaAprobacion();
+        
+        if(nota!=null){
+            switch(nota){
+                case APROBADO_SO:   this.ventana.verTxtObservaciones().setText(null);
+                                    this.ventana.verTxtObservaciones().setEnabled(false);
+                                    break;
+                                
+                case APROBADO_CO:
+                case DESAPROBADO:   this.ventana.verTxtObservaciones().setEnabled(true);
+                                    break;
             }
         }
+        else{
+            this.ventana.verTxtObservaciones().setEnabled(false);
+        }
+           
+        
     }
+
+
+
 
         
     private void inicializarComboNota(JComboBox comboNota) {
@@ -164,6 +146,6 @@ public class ControladorAMSeminario implements IControladorAMSeminario{
    
     
 
-    }
+}
     
 

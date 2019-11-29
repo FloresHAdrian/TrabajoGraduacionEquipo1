@@ -24,7 +24,7 @@ public class VentanaAMSeminario extends javax.swing.JDialog {
     public VentanaAMSeminario(IControladorAMSeminario controlador, Dialog VentanaPadre) {
         super(VentanaPadre,true);
         initComponents();
-         this.comboNota.setModel(new ModeloComboNota());
+//         this.comboNota.setModel(new ModeloComboNota());
         this.controlador= controlador;
     }
     
@@ -80,15 +80,15 @@ public class VentanaAMSeminario extends javax.swing.JDialog {
         jLabel2.setText("Nota de Aprobación:");
 
         comboNota.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboNota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboNotaActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Observaciones:");
 
         txtObservaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        txtObservaciones.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtObservacionesKeyPressed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -145,20 +145,20 @@ public class VentanaAMSeminario extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-        this.controlador.btnGuardarClic(evt);
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         this.controlador.btnCancelarClic(evt);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void txtObservacionesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtObservacionesKeyPressed
+    private void comboNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboNotaActionPerformed
         // TODO add your handling code here:
-        this.controlador.txtObservacionesPresionarTecla(evt);
-    }//GEN-LAST:event_txtObservacionesKeyPressed
+        this.controlador.comboNotaCambiarSeleccion(evt);
+    }//GEN-LAST:event_comboNotaActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        this.controlador.btnGuardarClic(evt);
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
 //    /**
 //     * @param args the command line arguments

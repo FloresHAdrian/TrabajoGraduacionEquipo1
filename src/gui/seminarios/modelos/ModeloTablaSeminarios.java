@@ -16,7 +16,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModeloTablaSeminarios extends AbstractTableModel{
     //Constantes para los nombre de las columnas
-    public static final String COLUMNA_FECHA = "Fecha de Exposicion";
+    public static final String COLUMNA_FECHA = "Fecha";
     public static final String COLUMNA_NOTA = "Nota";
     public static final String COLUMNA_OBSERVACIONES="Observaciones";
     //Lista que voy a sacar del trabajo
