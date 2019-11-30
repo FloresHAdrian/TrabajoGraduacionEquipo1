@@ -30,11 +30,12 @@ import javax.swing.JOptionPane;
  *
  * @author User
  */
-public class ControladorAMSeminario implements IControladorAMSeminario{
-      private VentanaAMSeminario ventana;
-      private Seminario seminario;
-      private String titulo;
-   
+public class ControladorAMSeminario implements IControladorAMSeminario {
+
+    private VentanaAMSeminario ventana;
+    private Seminario seminario;
+    private String titulo;
+
     public ControladorAMSeminario(Dialog VentanaPadre, Seminario seminario, String titulo) {
         this.titulo = titulo;
         this.ventana = new VentanaAMSeminario(this, VentanaPadre);
@@ -62,13 +63,11 @@ public class ControladorAMSeminario implements IControladorAMSeminario{
         ventana.setVisible(true);
 
     }
-    
-    
 
     @Override
     public void btnGuardarClic(ActionEvent evt) {
         this.guardar();
-        
+
     }
 
     public void guardar() {
@@ -97,16 +96,15 @@ public class ControladorAMSeminario implements IControladorAMSeminario{
             this.ventana.dispose();
         } else {
             gestorT.dameTrabajo(titulo).cancelar();
-          
-                JOptionPane.showMessageDialog(null, resultado, IControladorSeminarios.TITULO, JOptionPane.WARNING_MESSAGE);
-            
+
+            JOptionPane.showMessageDialog(null, resultado, IControladorSeminarios.TITULO, JOptionPane.WARNING_MESSAGE);
+
         }
     }
-    
 
     @Override
     public void btnCancelarClic(ActionEvent evt) {
-        IGestorTrabajos gestorT= GestorTrabajos.instanciar();
+        IGestorTrabajos gestorT = GestorTrabajos.instanciar();
         gestorT.dameTrabajo(titulo).cancelar();
         this.ventana.dispose();
     }
@@ -114,45 +112,37 @@ public class ControladorAMSeminario implements IControladorAMSeminario{
     @Override
     public void comboNotaCambiarSeleccion(ActionEvent evt) {
         JComboBox comboNota = this.ventana.verComboNota();
-        ModeloComboNota mcn = (ModeloComboNota)this.ventana.verComboNota().getModel();
+        ModeloComboNota mcn = (ModeloComboNota) this.ventana.verComboNota().getModel();
         NotaAprobacion nota = mcn.obtenerNotaAprobacion();
-        
-        if(nota!=null){
-            switch(nota){
-                case APROBADO_SO:   this.ventana.verTxtObservaciones().setText(null);
-                                    this.ventana.verTxtObservaciones().setEnabled(false);
-                                    break;
-                                
+
+        if (nota != null) {
+            switch (nota) {
+                case APROBADO_SO:
+                    this.ventana.verTxtObservaciones().setText(null);
+                    this.ventana.verTxtObservaciones().setEnabled(false);
+                    break;
+
                 case APROBADO_CO:
-                case DESAPROBADO:   this.ventana.verTxtObservaciones().setEnabled(true);
-                                    this.ventana.verTxtObservaciones().selectAll();
-                                    this.ventana.verTxtObservaciones().requestFocus();
-                                    break;
+                case DESAPROBADO:
+                    this.ventana.verTxtObservaciones().setEnabled(true);
+                    this.ventana.verTxtObservaciones().selectAll();
+                    this.ventana.verTxtObservaciones().requestFocus();
+                    break;
             }
-        }
-        else{
+        } else {
             this.ventana.verTxtObservaciones().setEnabled(false);
         }
-           
-        
+
     }
 
-
-
-
-        
     private void inicializarComboNota(JComboBox comboNota) {
         ModeloComboNota mcn = new ModeloComboNota();
         comboNota.setModel(mcn);
-        if(this.seminario!=null){
-        mcn.seleccionarNotaAprobacion(seminario.verNotaAprobacion());
-        }else{
+        if (this.seminario != null) {
+            mcn.seleccionarNotaAprobacion(seminario.verNotaAprobacion());
+        } else {
             mcn.seleccionarNotaAprobacion(null);
         }
     }
-   
-    
 
 }
-    
-

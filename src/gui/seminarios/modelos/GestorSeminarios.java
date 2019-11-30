@@ -23,7 +23,7 @@ import java.util.List;
  * @author User
  */
 public class GestorSeminarios implements IGestorSeminarios{
-    static GestorSeminarios gestor;//Variable de clase
+    private static GestorSeminarios gestor;//Variable de clase
     public static final String TEXTO_SEMINARIOS= "./seminarios.txt";
     
     private GestorSeminarios(){
@@ -91,24 +91,25 @@ public class GestorSeminarios implements IGestorSeminarios{
         BufferedWriter bw = null;
         File f = new File(TEXTO_SEMINARIOS);
         GestorTrabajos gstrabajos = GestorTrabajos.instanciar();
+        
         try {
-            List<Trabajo> listtaTrabajos = gstrabajos.buscarTrabajos("");
+            List<Trabajo> listtaTrabajos = gstrabajos.buscarTrabajos(null);
             for (Trabajo t : listtaTrabajos) {
                 List<Seminario> listaSeminarios = t.verSeminarios();
 
-                    bw = new BufferedWriter(new FileWriter(f));
-                    for (int i = 0; i < listaSeminarios.size(); i++) {
-                        Seminario unSeminario = listaSeminarios.get(i);
-                        String cadena = unSeminario.verFechaExposicion() + ";";
-                        cadena += unSeminario.verNotaAprobacion() + ";";
-                        cadena += unSeminario.verObservaciones() + ";";
-                        bw.write(cadena);
-                        if (i < listaSeminarios.size() - 1) {
-                            bw.newLine();
-                        }
-
+                bw = new BufferedWriter(new FileWriter(f));
+                for (int i = 0; i < listaSeminarios.size(); i++) {
+                    Seminario unSeminario = listaSeminarios.get(i);
+                    String cadena = unSeminario.verFechaExposicion() + ";";
+                    cadena += unSeminario.verNotaAprobacion() + ";";
+                    cadena += unSeminario.verObservaciones() + ";";
+                    bw.write(cadena);
+                    if (i < listaSeminarios.size() - 1) {
+                        bw.newLine();
                     }
+
                 }
+            }
             return ESCRITURA_OK;
             
             } catch (IOException ioe) {
@@ -133,7 +134,7 @@ public class GestorSeminarios implements IGestorSeminarios{
 
             try {
                 GestorTrabajos gsTrabajos = GestorTrabajos.instanciar();
-                for (Trabajo t : gsTrabajos.buscarTrabajos("")) {
+                for (Trabajo t : gsTrabajos.buscarTrabajos(null)) {
                     List<Seminario> seminarios = t.verSeminarios();
                     br = new BufferedReader(new FileReader(f));
                     String cadena;

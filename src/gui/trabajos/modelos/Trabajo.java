@@ -256,9 +256,7 @@ public class Trabajo {
      * @return String  - cadena con el resultado de la operación (TRABAJO_FINALIZADO | ERROR_FECHA_EXPOSICION | DUPLICADOS | ERROR | ERROR_OBSERVACIONES | EXITO)
      */
     public String nuevoSeminario(LocalDate fechaExposicion, NotaAprobacion notaAprobacion, String observaciones) {
-       
         GestorSeminarios gsSeminarios= GestorSeminarios.instanciar();
-     
         String estado= gsSeminarios.validarSeminario(fechaExposicion, notaAprobacion, observaciones);
 
         if(estado.equals(IGestorSeminarios.ERROR)){
@@ -285,9 +283,7 @@ public class Trabajo {
             
         }
      
-//        estado.equals(IGestorSeminarios.ERROR_OBSERVACIONES)){
         return estado;
-//        }
     }
     
     /**
