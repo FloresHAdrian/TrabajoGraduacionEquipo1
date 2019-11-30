@@ -88,6 +88,7 @@ public class GestorSeminarios implements IGestorSeminarios{
      */   
     @Override
     public String guardarSeminarios() {
+ 
         BufferedWriter bw = null;
         File f = new File(TEXTO_SEMINARIOS);
         GestorTrabajos gstrabajos = GestorTrabajos.instanciar();
@@ -95,12 +96,14 @@ public class GestorSeminarios implements IGestorSeminarios{
         try {
             List<Trabajo> listtaTrabajos = gstrabajos.buscarTrabajos(null);
             for (Trabajo t : listtaTrabajos) {
+                String cadena = t.verTitulo();
                 List<Seminario> listaSeminarios = t.verSeminarios();
-
                 bw = new BufferedWriter(new FileWriter(f));
                 for (int i = 0; i < listaSeminarios.size(); i++) {
+                    //Le agrego un caracter ";" como separador
+                    //Y escribo la cadena resultante en el archivo
                     Seminario unSeminario = listaSeminarios.get(i);
-                    String cadena = unSeminario.verFechaExposicion() + ";";
+                    cadena+= unSeminario.verFechaExposicion() + ";";
                     cadena += unSeminario.verNotaAprobacion() + ";";
                     cadena += unSeminario.verObservaciones() + ";";
                     bw.write(cadena);
@@ -125,6 +128,10 @@ public class GestorSeminarios implements IGestorSeminarios{
             }
 
         }
+    /**
+     * Metodo para leer la lista de personas de un archivo de texto
+     * @return String-cadena con el resultado de la operacion
+     */
 
     public String leerSeminarios() {
         BufferedReader br = null;
@@ -134,32 +141,31 @@ public class GestorSeminarios implements IGestorSeminarios{
 
             try {
                 GestorTrabajos gsTrabajos = GestorTrabajos.instanciar();
-                for (Trabajo t : gsTrabajos.buscarTrabajos(null)) {
-                    List<Seminario> seminarios = t.verSeminarios();
+                for (Trabajo t : gsTrabajos.buscarTrabajos(null)) {  
                     br = new BufferedReader(new FileReader(f));
                     String cadena;
                     while ((cadena = br.readLine()) != null) {
-                        String vector[] = cadena.split(";");
-                        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                        LocalDate fechaExposicion = LocalDate.parse(vector[0], format);
-                        if (vector[1].equals(NotaAprobacion.APROBADO_CO.name())) {
-                            NotaAprobacion nota = NotaAprobacion.APROBADO_CO;
-                            String observaciones = vector[2];
-                            Seminario unSeminario = new Seminario(fechaExposicion, nota, observaciones);
-                            seminarios.add(unSeminario);
+                        String vector[] = cadena.split(";");////Permite separar subcadenas y guardar en un array de String
+                        String titulo = vector[0];//guardamos titulo en el primer vector
+                        Trabajo trabajo = gsTrabajos.dameTrabajo(titulo);//usamos el  metodo dame trabajo del gestor para obtener trabajo por el titulo que enviamos
+                        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");//formato de la fecha
+                        LocalDate fechaExposicion = LocalDate.parse(vector[1], format);//guardamos fecha en el segundo vector
+                        // preguntamos si el vector 3 es aprobado con observaciones, sin observaciones o desaprobado
+                        if (vector[2].equals(NotaAprobacion.APROBADO_CO.name())) {
+                            NotaAprobacion nota = NotaAprobacion.valueOf(vector[2]);//guardamos nota de aprobacion en el tercer vector
+                            String observaciones = vector[3];//guardamos observaciones en el tercer vector
+                            trabajo.agregarSeminario(new Seminario(fechaExposicion, nota, observaciones));
                         }
-                        if (vector[1].equals(NotaAprobacion.APROBADO_SO.name())) {
-                            NotaAprobacion nota = NotaAprobacion.APROBADO_SO;
-                            String observaciones = vector[2];
-                            Seminario unSeminario = new Seminario(fechaExposicion, nota, observaciones);
-                            seminarios.add(unSeminario);
+                        if (vector[2].equals(NotaAprobacion.APROBADO_SO.name())) {
+                            NotaAprobacion nota = NotaAprobacion.valueOf(vector[2]);
+                            String observaciones = vector[3];//guardamos observaciones en el tercer vector
+                            trabajo.agregarSeminario(new Seminario(fechaExposicion, nota, observaciones));
                         }
 
-                        if (vector[1].equals(NotaAprobacion.DESAPROBADO.name())) {
-                            NotaAprobacion nota = NotaAprobacion.DESAPROBADO;
-                            String observaciones = vector[2];
-                            Seminario unSeminario = new Seminario(fechaExposicion, nota, observaciones);
-                            seminarios.add(unSeminario);
+                        if (vector[2].equals(NotaAprobacion.DESAPROBADO.name())) {
+                            NotaAprobacion nota = NotaAprobacion.valueOf(vector[2]);//guardamos nota de aprobacion en el tercer vector
+                            String observaciones = vector[3];//guardamos observaciones en el tercer vector
+                            trabajo.agregarSeminario(new Seminario(fechaExposicion, nota, observaciones));
                         }
                     }
 
