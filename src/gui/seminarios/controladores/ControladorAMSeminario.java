@@ -48,6 +48,10 @@ public class ControladorAMSeminario implements IControladorAMSeminario {
         this.titulo = titulo;
         this.ventana = new VentanaAMSeminario(this, ventanaPadre);
         this.seminario = seminario;
+        
+        this.ventana.verTxtObservaciones().setSize(279, 116);
+        this.ventana.verTxtObservaciones().setLineWrap(true);
+        this.ventana.verTxtObservaciones().setWrapStyleWord(true);
 
         if (this.seminario != null) {//modificación de seminario
             ventana.setTitle(IControladorSeminarios.MODIFICAR);

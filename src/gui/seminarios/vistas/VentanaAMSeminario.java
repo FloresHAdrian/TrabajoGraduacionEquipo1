@@ -101,7 +101,7 @@ public class VentanaAMSeminario extends javax.swing.JDialog {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Nota de Aprobación:");
 
-        comboNota.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        comboNota.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         comboNota.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboNota.setToolTipText("Eligir la nota correspondiente al seminarios");
         comboNota.addActionListener(new java.awt.event.ActionListener() {
@@ -117,7 +117,7 @@ public class VentanaAMSeminario extends javax.swing.JDialog {
         FechaExposicion.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
 
         txtObservaciones.setColumns(20);
-        txtObservaciones.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        txtObservaciones.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         txtObservaciones.setRows(5);
         txtObservaciones.setToolTipText("Area de texto para poner las observaciones sobre la nota");
         jScrollPane1.setViewportView(txtObservaciones);
