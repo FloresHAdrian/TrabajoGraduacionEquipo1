@@ -14,7 +14,6 @@ import gui.seminarios.modelos.NotaAprobacion;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -235,6 +234,14 @@ public class Trabajo {
      * @param seminario seminario a agregar
      */
     public void agregarSeminario(Seminario seminario) {
+        if (seminario != null) {
+            if (!this.seminarios.contains(seminario)) {
+                if (seminario.verFechaExposicion().isAfter(this.verFechaAprobacion())) {
+                    this.seminarios.add(seminario);
+                    Collections.sort(this.seminarios);
+                }
+            }
+        }
     }
     
     /**

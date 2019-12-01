@@ -94,24 +94,29 @@ public class GestorSeminarios implements IGestorSeminarios{
         GestorTrabajos gstrabajos = GestorTrabajos.instanciar();
         
         try {
-            List<Trabajo> listtaTrabajos = gstrabajos.buscarTrabajos(null);
-            for (Trabajo t : listtaTrabajos) {
-                String cadena = t.verTitulo();
+            List<Trabajo> listaTrabajos = gstrabajos.buscarTrabajos(null);
+            for (Trabajo t : listaTrabajos) {
+                String cadena = t.verTitulo()+";";
                 List<Seminario> listaSeminarios = t.verSeminarios();
                 bw = new BufferedWriter(new FileWriter(f));
                 for (int i = 0; i < listaSeminarios.size(); i++) {
                     //Le agrego un caracter ";" como separador
                     //Y escribo la cadena resultante en el archivo
                     Seminario unSeminario = listaSeminarios.get(i);
-                    cadena+= unSeminario.verFechaExposicion() + ";";
+                    String patron = "dd/MM/YYYY";
+                    LocalDate fExposicion = unSeminario.verFechaExposicion();
+                    String fechaExposicion = fExposicion.format(DateTimeFormatter.ofPattern(patron));
+                    cadena+= fechaExposicion + ";";
                     cadena += unSeminario.verNotaAprobacion() + ";";
                     cadena += unSeminario.verObservaciones() + ";";
-                    bw.write(cadena);
+//                    bw.write(cadena);
                     if (i < listaSeminarios.size() - 1) {
-                        bw.newLine();
+//                        bw.newLine();
                     }
 
                 }
+                bw.write(cadena);
+                bw.newLine();
             }
             return ESCRITURA_OK;
             
@@ -151,21 +156,23 @@ public class GestorSeminarios implements IGestorSeminarios{
                         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");//formato de la fecha
                         LocalDate fechaExposicion = LocalDate.parse(vector[1], format);//guardamos fecha en el segundo vector
                         // preguntamos si el vector 3 es aprobado con observaciones, sin observaciones o desaprobado
-                        if (vector[2].equals(NotaAprobacion.APROBADO_CO.name())) {
-                            NotaAprobacion nota = NotaAprobacion.valueOf(vector[2]);//guardamos nota de aprobacion en el tercer vector
+                        
+                        if (vector[2].equalsIgnoreCase("Aprobado C/O")) {
+//                            NotaAprobacion nota = NotaAprobacion.valueOf(vector[2]);//guardamos nota de aprobacion en el tercer vector
                             String observaciones = vector[3];//guardamos observaciones en el tercer vector
-                            trabajo.agregarSeminario(new Seminario(fechaExposicion, nota, observaciones));
+//                            trabajo.nuevoSeminario(fechaExposicion, NotaAprobacion.DESAPROBADO, observaciones);
+                            trabajo.agregarSeminario(new Seminario(fechaExposicion, NotaAprobacion.APROBADO_CO, observaciones));
                         }
-                        if (vector[2].equals(NotaAprobacion.APROBADO_SO.name())) {
-                            NotaAprobacion nota = NotaAprobacion.valueOf(vector[2]);
-                            String observaciones = vector[3];//guardamos observaciones en el tercer vector
-                            trabajo.agregarSeminario(new Seminario(fechaExposicion, nota, observaciones));
+                        if (vector[2].equalsIgnoreCase("Aprobado S/O")) {
+//                            NotaAprobacion nota = NotaAprobacion.valueOf(vector[2]);
+                            String observaciones = "-";//guardamos observaciones en el tercer vector
+                            trabajo.agregarSeminario(new Seminario(fechaExposicion, NotaAprobacion.APROBADO_SO, observaciones));
                         }
 
-                        if (vector[2].equals(NotaAprobacion.DESAPROBADO.name())) {
-                            NotaAprobacion nota = NotaAprobacion.valueOf(vector[2]);//guardamos nota de aprobacion en el tercer vector
+                        if (vector[2].equalsIgnoreCase("Desaprobado")) {
+//                            NotaAprobacion nota = NotaAprobacion.valueOf(vector[2]);//guardamos nota de aprobacion en el tercer vector
                             String observaciones = vector[3];//guardamos observaciones en el tercer vector
-                            trabajo.agregarSeminario(new Seminario(fechaExposicion, nota, observaciones));
+                            trabajo.agregarSeminario(new Seminario(fechaExposicion, NotaAprobacion.DESAPROBADO, observaciones));
                         }
                     }
 
