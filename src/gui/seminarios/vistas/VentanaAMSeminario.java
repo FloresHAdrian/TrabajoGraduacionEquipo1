@@ -7,40 +7,54 @@ package gui.seminarios.vistas;
 
 import com.toedter.calendar.JDateChooser;
 import gui.interfaces.IControladorAMSeminario;
-import gui.seminarios.modelos.ModeloComboNota;
 import java.awt.Dialog;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 /**
  *
  * @author User
  */
 public class VentanaAMSeminario extends javax.swing.JDialog {
+
     private IControladorAMSeminario controlador;
+
     /**
-     * Creates new form VentanaAMSeminarios
+     * Constructor
+     *
+     * @param controlador controlador de la ventana
+     * @param ventanaPadre VentanaSeminarios
      */
-    public VentanaAMSeminario(IControladorAMSeminario controlador, Dialog VentanaPadre) {
-        super(VentanaPadre,true);
+    public VentanaAMSeminario(IControladorAMSeminario controlador, Dialog ventanaPadre) {
+        super(ventanaPadre, true);
         initComponents();
-//         this.comboNota.setModel(new ModeloComboNota());
-        this.controlador= controlador;
+        this.controlador = controlador;
     }
-    
-        public JTextArea verTxtObservaciones() {
+
+    /**
+     * Devuelve el área de texto areaObservaciones
+     * @return JTextArea - área de texto areaObservaciones
+     */
+
+    public JTextArea verTxtObservaciones() {
         return this.txtObservaciones;
     }
 
+    /**
+     * Devuelve el combo ComboNotaAprobacion
+     * @return JComboBox - combo ComboNotaAprobacion
+     */
     public JComboBox verComboNota() {
         return this.comboNota;
     }
-    
-    public JDateChooser verFechaExposicion(){
+
+    /**
+     * Devuelve el DateChooser de fecha fechaExposicion
+     * @return JDateChooser - fechaExposicion
+     */
+    public JDateChooser verFechaExposicion() {
         return this.FechaExposicion;
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -62,6 +76,7 @@ public class VentanaAMSeminario extends javax.swing.JDialog {
         txtObservaciones = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Fecha de Exposición:");
 
@@ -148,17 +163,14 @@ public class VentanaAMSeminario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
         this.controlador.btnCancelarClic(evt);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void comboNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboNotaActionPerformed
-        // TODO add your handling code here:
         this.controlador.comboNotaCambiarSeleccion(evt);
     }//GEN-LAST:event_comboNotaActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
         this.controlador.btnGuardarClic(evt);
     }//GEN-LAST:event_btnGuardarActionPerformed
 

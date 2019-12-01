@@ -67,6 +67,10 @@ public class Seminario implements Comparable<Seminario>{
     public void asignarObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
+    /**
+     * equals() y hashCode(). Comparamos por fechaExposicion
+     * @return int o boolean
+     */
 
     @Override
     public int hashCode() {
@@ -92,6 +96,10 @@ public class Seminario implements Comparable<Seminario>{
         }
         return true;
     }
+    /**
+     * metodo toString()
+     * @return String 
+     */
 
     @Override
     public String toString() {
@@ -117,7 +125,11 @@ public class Seminario implements Comparable<Seminario>{
         else
             System.out.println("  Observaciones: -");         
     }
-
+    /**
+     * metodo compareTo para ordenar seminarios por fechaExposicion
+     * @param s seminario
+     * @return int 
+     */
     @Override
     public int compareTo(Seminario s) {
         return this.fechaExposicion.compareTo(s.fechaExposicion);
