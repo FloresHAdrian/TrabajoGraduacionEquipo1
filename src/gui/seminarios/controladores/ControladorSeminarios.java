@@ -75,6 +75,7 @@ public class ControladorSeminarios implements IControladorSeminarios{
         Seminario unSeminario= this.obtenerSeminarioSeleccionadao();
         GestorTrabajos gsT= GestorTrabajos.instanciar();
         if(unSeminario != null){//Si tiene seminario seleccionado
+            this.operacion = OPERACION_MODIFICACION;
             IControladorAMSeminario controlador= new ControladorAMSeminario(this.ventana, unSeminario, titulo);
         }
     }
@@ -118,8 +119,6 @@ public class ControladorSeminarios implements IControladorSeminarios{
             this.inicializarTablaSeminarios(tablaSeminarios,titulo);
         
         this.operacion = OPERACION_NINGUNA;
-        
-
         GestorTrabajos gsT= GestorTrabajos.instanciar();
         JButton btnModificar= this.ventana.verBtnModificar();
         if(!gsT.dameTrabajo(titulo).tieneSeminarios()){//Si el trabajo no tien seminarios deshabilito el boton Modificar

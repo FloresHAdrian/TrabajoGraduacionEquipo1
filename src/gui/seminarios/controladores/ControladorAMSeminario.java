@@ -55,13 +55,13 @@ public class ControladorAMSeminario implements IControladorAMSeminario {
             ventana.verFechaExposicion().setDate(date);
             ventana.verFechaExposicion().setEnabled(false);
             ventana.verTxtObservaciones().setText(seminario.verObservaciones());
-
+            ventana.verTxtObservaciones().setEnabled(false);//texto observaciones deshabilitado cuando se llama a modificar un seminario
+                                                         //Si la nota admite observaciones, comboNotaCambiarSeleccion habilita el cuadro                                  
         } else {
             //para que muestra la fecha actual por defecto
             LocalDate fActual = LocalDate.now();
             GregorianCalendar fechaActual = GregorianCalendar.from(fActual.atStartOfDay(ZoneId.systemDefault()));
             this.ventana.verFechaExposicion().setCalendar(fechaActual);
-
             ventana.setTitle(IControladorSeminarios.NUEVO);
         }
         
