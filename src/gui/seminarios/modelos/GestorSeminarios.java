@@ -150,36 +150,35 @@ public class GestorSeminarios implements IGestorSeminarios{
 
             try {
                 GestorTrabajos gsTrabajos = GestorTrabajos.instanciar();
-                 
-                    br = new BufferedReader(new FileReader(f));
-                    String cadena;
-                    while ((cadena = br.readLine()) != null) {
-                        String vector[] = cadena.split(";");////Permite separar subcadenas y guardar en un array de String
-                        String titulo = vector[0];//guardamos titulo en el primer vector
-                        Trabajo trabajo = gsTrabajos.dameTrabajo(titulo);//usamos el  metodo dame trabajo del gestor para obtener trabajo por el titulo que enviamos
-                        int cantidad = Integer.parseInt(vector[1]);
-                        if (cantidad > 0) {
-                        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");//formato de la fecha
-                        LocalDate fechaExposicion = LocalDate.parse(vector[2], format);//guardamos fecha en el segundo vector
-                        // preguntamos si el vector 3 es aprobado con observaciones, sin observaciones o desaprobado
-                        if (vector[3].equalsIgnoreCase("Aprobado C/O")) {
-                            String observaciones = vector[4];//guardamos observaciones en el tercer vector
-                            trabajo.agregarSeminario(new Seminario(fechaExposicion, NotaAprobacion.APROBADO_CO, observaciones));
-                        }
-                        if (vector[3].equalsIgnoreCase("Aprobado S/O")) {
-                            String observaciones = vector[4];
-                            if(observaciones.equalsIgnoreCase(" "))
-                             observaciones = null;//si es desaprobado mando null a las observaciones
-                            trabajo.agregarSeminario(new Seminario(fechaExposicion, NotaAprobacion.APROBADO_SO, observaciones));
-                        }
 
-                        if (vector[3].equalsIgnoreCase("Desaprobado")) {
-//                            NotaAprobacion nota = NotaAprobacion.valueOf(vector[2]);//guardamos nota de aprobacion en el tercer vector
-                            String observaciones = vector[4];//guardamos observaciones en el tercer vector
-                            trabajo.agregarSeminario(new Seminario(fechaExposicion, NotaAprobacion.DESAPROBADO, observaciones));
+                br = new BufferedReader(new FileReader(f));
+                String cadena;
+                while ((cadena = br.readLine()) != null) {
+                    String vector[] = cadena.split(";");////Permite separar subcadenas y guardar en un array de String
+                    String titulo = vector[0];//guardamos titulo en el primer vector
+                    Trabajo trabajo = gsTrabajos.dameTrabajo(titulo);//usamos el  metodo dame trabajo del gestor para obtener trabajo por el titulo que enviamos
+                    int cantidad = Integer.parseInt(vector[1]);
+                    if (cantidad > 0) {
+                        for (int i = 2; i <= cantidad * 3 + 1;) {
+                            DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");//formato de la fecha
+                            LocalDate fechaExposicion = LocalDate.parse(vector[i++], format);//guardamos fecha en el segundo vector
+                            // preguntamos si el vector 3 es aprobado con observaciones, sin observaciones o desaprobado
+                            String nota = vector[i++];
+                            if (nota.equalsIgnoreCase("Aprobado C/O")) {
+                                String observaciones = vector[i++];//guardamos observaciones en el tercer vector
+                                trabajo.agregarSeminario(new Seminario(fechaExposicion, NotaAprobacion.APROBADO_CO, observaciones));
+                            } else if (nota.equalsIgnoreCase("Aprobado S/O")) {
+                                String observaciones = vector[i++];
+                                if (observaciones.equalsIgnoreCase(" ")) {
+                                    observaciones = null;//si es desaprobado mando null a las observaciones
+                                }
+                                trabajo.agregarSeminario(new Seminario(fechaExposicion, NotaAprobacion.APROBADO_SO, observaciones));
+                            } else if (nota.equalsIgnoreCase("Desaprobado")) {
+                                String observaciones = vector[i++];//guardamos observaciones en el tercer vector
+                                trabajo.agregarSeminario(new Seminario(fechaExposicion, NotaAprobacion.DESAPROBADO, observaciones));
+                            }
                         }
                     }
-                    
                 }
                 return LECTURA_OK;
             } catch (IOException ioe) {
