@@ -99,7 +99,7 @@ public class GestorSeminarios implements IGestorSeminarios{
             for (Trabajo t : listaTrabajos) {
                 String cadena = t.verTitulo()+";";
                 cantidad = t.verSeminarios().size();
-                cadena += Integer.toString(cantidad)+";";
+                cadena += Integer.toString(cantidad);
                 List<Seminario> listaSeminarios = t.verSeminarios();
                 bw = new BufferedWriter(new FileWriter(f));
                 if (cantidad > 0) {
@@ -110,12 +110,12 @@ public class GestorSeminarios implements IGestorSeminarios{
                         String patron = "dd/MM/YYYY";
                         LocalDate fExposicion = unSeminario.verFechaExposicion();
                         String fechaExposicion = fExposicion.format(DateTimeFormatter.ofPattern(patron));
-                        cadena += fechaExposicion + ";";
+                        cadena +=";"+ fechaExposicion + ";";
                         cadena += unSeminario.verNotaAprobacion().toString()+ ";";
                         if (!unSeminario.verObservaciones().trim().isEmpty()||unSeminario.verObservaciones()!=null)
-                            cadena += unSeminario.verObservaciones()+";";
+                            cadena += unSeminario.verObservaciones();
                         else
-                            cadena += " "+";";
+                            cadena += " ";
                     }
                 }
                 bw.write(cadena);

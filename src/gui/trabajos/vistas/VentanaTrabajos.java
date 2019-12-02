@@ -89,7 +89,7 @@ public class VentanaTrabajos extends javax.swing.JDialog {
         // TODO add your handling code here
 //        GestorTrabajos gestorTrabajos= GestorTrabajos.instanciar();
 //        Trabajo unTrabajo = gestorTrabajos.dameTrabajo("Titulo");
-        ControladorSeminarios controladorSeminarios= new ControladorSeminarios(this, "Titulo de Prueba");
+        ControladorSeminarios controladorSeminarios= new ControladorSeminarios(this,"Titulo de Prueba");
         
     }//GEN-LAST:event_btnSeminariosActionPerformed
 
