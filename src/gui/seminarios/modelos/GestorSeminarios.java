@@ -112,12 +112,10 @@ public class GestorSeminarios implements IGestorSeminarios{
                         String fechaExposicion = fExposicion.format(DateTimeFormatter.ofPattern(patron));
                         cadena += fechaExposicion + ";";
                         cadena += unSeminario.verNotaAprobacion().toString()+ ";";
-                        if (!unSeminario.verObservaciones().trim().isEmpty())
+                        if (!unSeminario.verObservaciones().trim().isEmpty()||unSeminario.verObservaciones()!=null)
                             cadena += unSeminario.verObservaciones()+";";
                         else
                             cadena += " "+";";
-
-
                     }
                 }
                 bw.write(cadena);
