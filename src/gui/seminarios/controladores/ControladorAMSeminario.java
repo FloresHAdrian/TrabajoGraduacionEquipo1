@@ -48,10 +48,8 @@ public class ControladorAMSeminario implements IControladorAMSeminario {
     public ControladorAMSeminario(Dialog ventanaPadre, Seminario seminario, String titulo) {
         this.titulo = titulo;
         this.ventana = new VentanaAMSeminario(this, ventanaPadre);
-        this.ventana.getContentPane().setBackground(Color.LIGHT_GRAY);
-     
         this.seminario = seminario;
-        
+
         this.ventana.verTxtObservaciones().setSize(279, 116);
         this.ventana.verTxtObservaciones().setLineWrap(true);
         this.ventana.verTxtObservaciones().setWrapStyleWord(true);
@@ -63,7 +61,7 @@ public class ControladorAMSeminario implements IControladorAMSeminario {
             ventana.verFechaExposicion().setEnabled(false);
             ventana.verTxtObservaciones().setText(seminario.verObservaciones());
             ventana.verTxtObservaciones().setEnabled(false);//texto observaciones deshabilitado cuando se llama a modificar un seminario
-                                                         //Si la nota admite observaciones, comboNotaCambiarSeleccion habilita el cuadro                                  
+            //Si la nota admite observaciones, comboNotaCambiarSeleccion habilita el cuadro                                  
         } else {
             //para que muestra la fecha actual por defecto
             LocalDate fActual = LocalDate.now();
@@ -71,19 +69,18 @@ public class ControladorAMSeminario implements IControladorAMSeminario {
             this.ventana.verFechaExposicion().setCalendar(fechaActual);
             ventana.setTitle(IControladorSeminarios.NUEVO);
         }
-        
 
         this.inicializarComboNota(this.ventana.verComboNota());
         ventana.setLocationRelativeTo(null);
         ventana.setVisible(true);
-        
+
     }
 
     /**
      * Acción a ejecutar cuando se selecciona el botón Guardar
+     *
      * @param evt evento
      */
-
     @Override
     public void btnGuardarClic(ActionEvent evt) {
         this.guardar();
@@ -93,7 +90,6 @@ public class ControladorAMSeminario implements IControladorAMSeminario {
     /**
      * Crea o modifica un seminario
      */
-
     public void guardar() {
 
         LocalDate fecha = null;
@@ -128,6 +124,7 @@ public class ControladorAMSeminario implements IControladorAMSeminario {
 
     /**
      * Acción a ejecutar cuando se selecciona el botón Cancelar
+     *
      * @param evt evento
      */
     @Override
@@ -139,6 +136,7 @@ public class ControladorAMSeminario implements IControladorAMSeminario {
 
     /**
      * Acción a ejecutar cuando cambia la selección en el combo
+     *
      * @param evt evento
      */
     @Override

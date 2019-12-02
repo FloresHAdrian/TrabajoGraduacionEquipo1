@@ -23,7 +23,6 @@ public class VentanaTrabajos extends javax.swing.JDialog {
     public VentanaTrabajos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-         this.getContentPane().setBackground(Color.LIGHT_GRAY);
         this.setTitle("Seminarios");
         this.setLocationRelativeTo(null);
         this.setVisible(true);
