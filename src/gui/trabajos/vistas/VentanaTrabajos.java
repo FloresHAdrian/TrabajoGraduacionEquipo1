@@ -8,6 +8,8 @@ package gui.trabajos.vistas;
 import gui.seminarios.controladores.ControladorSeminarios;
 import gui.trabajos.modelos.GestorTrabajos;
 import gui.trabajos.modelos.Trabajo;
+import java.applet.AudioClip;
+import java.awt.Color;
 
 /**
  *
@@ -21,8 +23,11 @@ public class VentanaTrabajos extends javax.swing.JDialog {
     public VentanaTrabajos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+         this.getContentPane().setBackground(Color.LIGHT_GRAY);
+        this.setTitle("Seminarios");
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+       
     }
 
     /**
@@ -35,31 +40,47 @@ public class VentanaTrabajos extends javax.swing.JDialog {
     private void initComponents() {
 
         btnSeminarios = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        btnSeminarios.setBackground(new java.awt.Color(204, 204, 204));
+        btnSeminarios.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnSeminarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/trabajos/vistas/cursor.png"))); // NOI18N
+        btnSeminarios.setMnemonic('S');
         btnSeminarios.setText("Seminarios");
+        btnSeminarios.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnSeminarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSeminariosActionPerformed(evt);
             }
         });
 
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/trabajos/vistas/formulario.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(274, Short.MAX_VALUE)
-                .addComponent(btnSeminarios)
-                .addGap(43, 43, 43))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(152, 152, 152)
+                        .addComponent(btnSeminarios, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(55, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnSeminarios)
-                .addContainerGap(250, Short.MAX_VALUE))
+                .addGap(49, 49, 49))
         );
 
         pack();
@@ -70,6 +91,7 @@ public class VentanaTrabajos extends javax.swing.JDialog {
 //        GestorTrabajos gestorTrabajos= GestorTrabajos.instanciar();
 //        Trabajo unTrabajo = gestorTrabajos.dameTrabajo("Titulo");
         ControladorSeminarios controladorSeminarios= new ControladorSeminarios(this, "Titulo de Prueba");
+        
     }//GEN-LAST:event_btnSeminariosActionPerformed
 
     /**
@@ -131,5 +153,6 @@ public class VentanaTrabajos extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSeminarios;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }

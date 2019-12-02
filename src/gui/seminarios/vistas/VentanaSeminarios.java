@@ -79,27 +79,33 @@ public class VentanaSeminarios extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tablaSeminarios);
 
+        btnNuevArea.setBackground(new java.awt.Color(204, 204, 204));
         btnNuevArea.setMnemonic('N');
         btnNuevArea.setText("Nuevo Seminario");
         btnNuevArea.setToolTipText("Intenta crear un nuevo seminario");
+        btnNuevArea.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnNuevArea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevAreaActionPerformed(evt);
             }
         });
 
+        btnModificar.setBackground(new java.awt.Color(204, 204, 204));
         btnModificar.setMnemonic('M');
         btnModificar.setText("Modificar Seminario");
         btnModificar.setToolTipText("Intenta modificar un seminario");
+        btnModificar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
             }
         });
 
+        btnVolver.setBackground(new java.awt.Color(204, 204, 204));
         btnVolver.setMnemonic('V');
         btnVolver.setText("Volver");
         btnVolver.setToolTipText("Retorna a la ventana anterior");
+        btnVolver.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVolverActionPerformed(evt);
@@ -135,7 +141,7 @@ public class VentanaSeminarios extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtNombreTrabajo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)

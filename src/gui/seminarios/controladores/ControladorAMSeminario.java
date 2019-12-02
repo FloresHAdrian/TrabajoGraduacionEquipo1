@@ -16,6 +16,7 @@ import gui.seminarios.vistas.VentanaAMSeminario;
 
 import gui.trabajos.modelos.GestorTrabajos;
 import gui.trabajos.modelos.Trabajo;
+import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -47,6 +48,8 @@ public class ControladorAMSeminario implements IControladorAMSeminario {
     public ControladorAMSeminario(Dialog ventanaPadre, Seminario seminario, String titulo) {
         this.titulo = titulo;
         this.ventana = new VentanaAMSeminario(this, ventanaPadre);
+        this.ventana.getContentPane().setBackground(Color.LIGHT_GRAY);
+     
         this.seminario = seminario;
         
         this.ventana.verTxtObservaciones().setSize(279, 116);
@@ -73,7 +76,7 @@ public class ControladorAMSeminario implements IControladorAMSeminario {
         this.inicializarComboNota(this.ventana.verComboNota());
         ventana.setLocationRelativeTo(null);
         ventana.setVisible(true);
-
+        
     }
 
     /**

@@ -15,6 +15,8 @@ import gui.seminarios.modelos.Seminario;
 import gui.seminarios.vistas.VentanaSeminarios;
 import gui.trabajos.modelos.GestorTrabajos;
 import gui.trabajos.modelos.Trabajo;
+import java.applet.AudioClip;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import javax.swing.JButton;
@@ -43,8 +45,9 @@ public class ControladorSeminarios implements IControladorSeminarios{
         this.titulo=titulo;
         //Instancio el GestorSeminarios para poder cargar la lista de seminarios de todos los trabajos desde el Archivo
         IGestorSeminarios gsSeminarios = GestorSeminarios.instanciar();
-                
+       
         this.ventana= new VentanaSeminarios(ventanaPadre, this);
+        this.ventana.getContentPane().setBackground(Color.LIGHT_GRAY);
         this.ventana.setLocationRelativeTo(null);
         this.ventana.verTxtNombreTrabajo().setText(titulo);
         this.ventana.verTxtNombreTrabajo().setEditable(false);
