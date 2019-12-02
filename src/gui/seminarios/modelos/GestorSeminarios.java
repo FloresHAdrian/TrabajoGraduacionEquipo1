@@ -166,11 +166,11 @@ public class GestorSeminarios implements IGestorSeminarios{
                                 String observaciones = vector[i++];//guardamos observaciones en el tercer vector
                                 trabajo.agregarSeminario(new Seminario(fechaExposicion, NotaAprobacion.APROBADO_CO, observaciones));
                             } else if (nota.equalsIgnoreCase("Aprobado S/O")) {
-                                i++;
-//                                String observaciones = vector[i++];
-//                                if (observaciones.equalsIgnoreCase(" ")) {
-                                    String observaciones = null;//si es desaprobado mando null a las observaciones
-//                                }
+//                                i++;
+                                String observaciones = vector[i++];
+                                if (observaciones.equalsIgnoreCase(" ")) {
+                                    observaciones = null;//si es desaprobado mando null a las observaciones
+                                }
                                 trabajo.agregarSeminario(new Seminario(fechaExposicion, NotaAprobacion.APROBADO_SO, observaciones));
                             } else if (nota.equalsIgnoreCase("Desaprobado")) {
                                 String observaciones = vector[i++];//guardamos observaciones en el tercer vector
